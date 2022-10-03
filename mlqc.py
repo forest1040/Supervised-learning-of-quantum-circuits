@@ -25,7 +25,7 @@ def DataLoad(N, P, first = False):
     """
 
     inp = []                 
-    with open(f'Dataset/input_N{N}_P{P}.dat') as line:
+    with open(f'qdata/input_N{N}_P{P}.dat') as line:
         for values in line:
             try:
                 gates = values.split()[0]
@@ -37,7 +37,7 @@ def DataLoad(N, P, first = False):
     
     outputs = []
     listemp = []
-    with open(f'Dataset/output_N{N}_P{P}.dat') as line:
+    with open(f'qdata/output_N{N}_P{P}.dat') as line:
         for values in line:
             try:
                 o = values.split()[0]
@@ -172,8 +172,8 @@ def r2(y_true, y_pred):
 
 if __name__ == '__main__':
     
-    N = 3   # Number of qubits
-    P = 5   # Number of gates per qubit
+    N = 11   # Number of qubits
+    P = 6   # Number of gates per qubit
     
     
     # first = True if we predict the first expectation value.
@@ -193,7 +193,7 @@ if __name__ == '__main__':
 
                        
     # Split in train and test set
-    X_train, X_test, y_train, y_test = train_test_split(inputs, outputs, test_size = 2000) 
+    X_train, X_test, y_train, y_test = train_test_split(inputs, outputs, test_size = 0.05) 
 
     del(inputs)
     del(outputs)
@@ -208,9 +208,9 @@ if __name__ == '__main__':
         
     # Saving the weights
     if first:
-        cnn.save_weights(f'Weights/N{N}_P{P}__firstqubit.h5')
+        cnn.save_weights(f'QW/N{N}_P{P}__firstqubit.h5')
     else:
-        cnn.save_weights(f'Weights/N{N}_P{P}__allqubits.h5')
+        cnn.save_weights(f'QW/N{N}_P{P}__allqubits.h5')
     
     # Predictions
     y_pred_test = cnn.predict(X_test)
