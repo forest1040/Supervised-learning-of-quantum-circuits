@@ -4,7 +4,7 @@ import numpy as np
 
 flag = 0
 #num_circuits = 1000000 #Number of quantum circuits that will be simulated
-num_circuits = 10000 #Number of quantum circuits that will be simulated
+num_circuits = 100000 #Number of quantum circuits that will be simulated
 N = 11 # Number of qubits
 P = 6 # Number of gates per qubit
 
@@ -13,7 +13,7 @@ fileo = open(f'qdata/output_N{N}_P{P}.dat','w')
 
 circ = np.zeros((N,P))
 for n in range(num_circuits):
-    if n % 100 == 0:
+    if n % 1000 == 0:
         print(n)
     
     qc = QuantumCircuit(N)  

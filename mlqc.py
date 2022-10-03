@@ -8,7 +8,7 @@ from tensorflow.keras.utils import get_custom_objects
 from keras.callbacks import EarlyStopping
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score
-
+import matplotlib.pyplot as plt
 
 def DataLoad(N, P, first = False):
 
@@ -203,7 +203,7 @@ if __name__ == '__main__':
     callback = EarlyStopping(monitor='val_loss', patience=5, restore_best_weights = True)
     
     # Training the model 
-    cnn.fit(X_train, y_train, validation_split = 0.005, epochs = 50, verbose=1,
+    history = cnn.fit(X_train, y_train, validation_split = 0.005, epochs = 50, verbose=1,
             batch_size = 512, callbacks = [callback])    
         
     # Saving the weights
@@ -223,3 +223,26 @@ if __name__ == '__main__':
         
         
     print(r2_score(y_test, y_pred_test))
+
+    metrics = ['loss', 'mae', 'r2']  # 使用する評価関数を指定
+
+    plt.figure(figsize=(10, 5))  # グラフを表示するスペースを用意
+
+    for i in range(len(metrics)):
+
+        metric = metrics[i]
+
+        plt.subplot(1, 3, i+1)  # figureを1×3のスペースに分け、i+1番目のスペースを使う
+        plt.title(metric)  # グラフのタイトルを表示
+
+        #print("history.history:", history.history)
+        
+        plt_train = history.history[metric]  # historyから訓練データの評価を取り出す
+        plt_test = history.history['val_' + metric]  # historyからテストデータの評価を取り出す
+        
+        plt.plot(plt_train, label='training')  # 訓練データの評価をグラフにプロット
+        plt.plot(plt_test, label='test')  # テストデータの評価をグラフにプロット
+        plt.legend()  # ラベルの表示
+        
+        plt.show()  # グラフの表示
+        plt.savefig(f"output/train_{metric}.png")

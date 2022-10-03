@@ -2,3 +2,6 @@ Dataset
 qdata
 QW
 Weights
+output
+__pycache__
+train.png
