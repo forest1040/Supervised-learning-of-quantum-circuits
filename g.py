@@ -4,7 +4,7 @@ import numpy as np
 
 flag = 0
 num_circuits = 100 #Number of quantum circuits that will be simulated
-N = 11 # Number of qubits
+N = 5 # Number of qubits
 P = 100 # Number of gates per qubit
 
 filei = open(f'qdata/input_N{N}_P{P}.dat','w')
