@@ -54,12 +54,14 @@ for n in range(num_circuits):
     qc.update_quantum_state(state)
     
     # Write on files
+    line = []
     for i in range(N):
-        filei.write(f'{" ".join([str(int(n)) for n in circ[i]])}\n')
-    filei.write('\n')
+        line.append(" ".join([str(int(n)) for n in circ[i]]))
+    filei.write(f'{" 9 ".join(line)}\n')
+    line = []
     for j in range(N):
-        fileo.write(f'{round(state.get_zero_probability(j), 5)}\n')
-    fileo.write('\n')
+        line.append(round(state.get_zero_probability(j), 5))
+    fileo.write(f'{" ".join([str(n) for n in line])}\n')
 
 fileo.close()
 filei.close()
